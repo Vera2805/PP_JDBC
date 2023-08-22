@@ -1,26 +1,19 @@
 package jm.task.core.jdbc.util;
 
 import java.sql.*;
-
+import java.sql.SQLException;
 
 public class Util {
     // реализуйте настройку соеденения с БД
     private static final String url = "jdbc:mysql://localhost:3306/mypp";
     private static final String user = "root";
     private static final String password = "root";
+    private static java.sql.SQLException SQLException;
 
+    public static Connection getConnection() throws SQLException {
 
-    private static Connection connection;
+        Connection connection = DriverManager.getConnection(url, user, password);
 
-    public static  Connection getConnection() {
-        try {
-            connection= DriverManager.getConnection(url, user, password);
-
-        } catch (SQLException sqlEx) {
-            System.out.println("connect ERROR");
-            sqlEx.printStackTrace();
-        }
-
-        return connection;
+        return DriverManager.getConnection(url, user, password);
     }
 }

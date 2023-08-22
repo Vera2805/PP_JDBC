@@ -36,7 +36,7 @@ public class UserServiceTest {
 
     @Test
     public void saveUser() {
-        Byte eqw=43;
+        Byte eqw = 43;
         try {
             userService.dropUsersTable();
             userService.createUsersTable();

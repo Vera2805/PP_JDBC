@@ -8,20 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    public void add(User user) throws SQLException {
-        Connection connection = Util.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO users (name, lastName, age, id) VALUES (?,?,?,?)";
+    private Connection connection;
 
-        preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, user.getName());
-        preparedStatement.setString(2, user.getLastName());
-        preparedStatement.setByte(3, user.getAge());
-        preparedStatement.setLong(4, user.getId());
-        preparedStatement.executeUpdate();
+    public UserDaoJDBCImpl(Connection connection) {
+        this.connection = connection;
+    }
 
-        preparedStatement.close();
-        connection.close();
+    public UserDaoJDBCImpl() {
+
     }
 
     @Override
@@ -53,30 +47,41 @@ public class UserDaoJDBCImpl implements UserDao {
 
 
     @Override
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(String name, String lastName, byte age) throws SQLException {
 
-    }
-
-
-    public void saveUser(User user) throws SQLException {
         Connection connection = Util.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(name, lastName,age)" +
-                " VALUES(?,?,?)");
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("INSERT INTO users(name, lastName,age)" +
+                    " VALUES(?,?,?)");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         try {
             connection.setAutoCommit(false);
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setByte(3, user.getAge());
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
 
             connection.commit();
         } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            preparedStatement.close();
-            connection.close();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+
+            } finally {
+                try {
+                    if (preparedStatement != null) {
+                        preparedStatement.close();
+                    }
+                    connection.close();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
         }
     }
 
@@ -115,7 +120,12 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id=?")) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
