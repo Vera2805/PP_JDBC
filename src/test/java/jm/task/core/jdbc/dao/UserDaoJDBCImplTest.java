@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.dao;
 
-import jm.task.core.jdbc.util.Util;
+import jm.task.core.jdbc.util.HibernateUtil;
 import junit.framework.TestCase;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ public class UserDaoJDBCImplTest extends TestCase {
 
     public void testCleanUsersTable() {
 
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = HibernateUtil.getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("DELETE FROM users WHERE id !=0");
         } catch (SQLException e) {

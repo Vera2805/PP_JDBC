@@ -1,7 +1,8 @@
 package jm.task.core.jdbc.service;
 
+import com.mysql.cj.xdevapi.SessionFactory;
 import jm.task.core.jdbc.dao.UserDao;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.sql.SQLException;
@@ -9,7 +10,14 @@ import java.util.List;
 
 
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao = new UserDaoJDBCImpl();
+    private  UserDao userDao;
+     public UserServiceImpl(SessionFactory sessionFactory) {
+         userDao = new UserDaoHibernateImpl((org.hibernate.SessionFactory) sessionFactory);
+     }
+
+    public UserServiceImpl() {
+
+    }
 
     @Override
     public void createUsersTable() throws SQLException {

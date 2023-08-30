@@ -18,7 +18,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    @Override
+
     public void createUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
         Statement statement = connection.createStatement();
@@ -31,7 +31,7 @@ public class UserDaoJDBCImpl implements UserDao {
         connection.close();
     }
 
-    @Override
+
     public void dropUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
         Statement statement = connection.createStatement();
@@ -46,7 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
 
-    @Override
+
     public void saveUser(String name, String lastName, byte age) throws SQLException {
 
         Connection connection = Util.getConnection();
@@ -85,7 +85,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    @Override
+
     public List<User> getAllUsers() throws SQLException {
         Connection connection = Util.getConnection();
         Statement statement = connection.createStatement();
@@ -108,7 +108,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    @Override
+
     public void cleanUsersTable() {
         try (Connection connection = Util.getConnection();
              Statement statement = connection.createStatement()) {
@@ -118,7 +118,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    @Override
+
     public void removeUserById(long id) {
         try (PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id=?")) {
             statement.setLong(1, id);
