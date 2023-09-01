@@ -7,7 +7,7 @@ import javax.persistence.Column;
 @Table(name = "users")
 public class User {
     public String setName;
-    public String setlastName;
+    public String setLastName;
     public Byte setAge;
 
     @Override
@@ -15,7 +15,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + setName + '\'' +
-                ", lastName='" + setlastName + '\'' +
+                ", lastName='" + setLastName + '\'' +
                 ", age=" + setAge +
                 '}';
     }
@@ -61,7 +61,7 @@ public class User {
     }
 
     public String getLastName() {
-        return setlastName;
+        return setLastName;
     }
 
     public void setLastName(String lastName) {
