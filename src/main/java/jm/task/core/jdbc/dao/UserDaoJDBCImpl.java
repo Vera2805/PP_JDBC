@@ -18,7 +18,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-
     public void createUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
         Statement statement = connection.createStatement();
@@ -95,9 +94,9 @@ public class UserDaoJDBCImpl implements UserDao {
         while (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getLong("id"));
-            user.setName = (resultSet.getString("name"));
-            user.setLastName = (resultSet.getString("lastName"));
-            user.setAge = (resultSet.getByte("age"));
+            user.setName (resultSet.getString("name"));
+            user.setLastName (resultSet.getString("lastName"));
+            user.setAge (resultSet.getByte("age"));
             userList.add(user);
         }
         resultSet.close();

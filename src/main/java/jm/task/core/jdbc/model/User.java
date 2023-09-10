@@ -6,31 +6,17 @@ import javax.persistence.Column;
 @Entity
 @Table(name = "users")
 public class User {
-    public String setName;
-    public String setLastName;
-    public Byte setAge;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + setName + '\'' +
-                ", lastName='" + setLastName + '\'' +
-                ", age=" + setAge +
-                '}';
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column
+    @Column(name = "age")
     private Byte age;
 
     public User() {
@@ -41,7 +27,6 @@ public class User {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
-        System.out.println(" TEST7 user " + this.lastName);
     }
 
     public Long getId() {
@@ -49,31 +34,48 @@ public class User {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public String getName() {
-        return setName;
+
+        return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public String getLastName() {
-        return setLastName;
+
+        return lastName;
     }
 
     public void setLastName(String lastName) {
+
         this.lastName = lastName;
     }
 
     public Byte getAge() {
-        return setAge;
+
+        return age;
     }
 
     public void setAge(Byte age) {
+
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
     }
 
 }
